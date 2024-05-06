@@ -1,0 +1,76 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpe08oynxs5f7"]
+
+[ext_resource type="PackedScene" uid="uid://dqmyih448kl6a" path="res://Scenes/area_2d.tscn" id="1_mtytl"]
+
+[node name="GlobalState" type="Node"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="Game" type="Node2D" parent="."]
+
+[node name="Line2D" type="Line2D" parent="Game"]
+position = Vector2(452, 243)
+points = PackedVector2Array(0, 0, 150, 0)
+width = 1.0
+
+[node name="Line2D2" type="Line2D" parent="Game"]
+position = Vector2(452, 243)
+points = PackedVector2Array(0, 0, 75, 100)
+width = 1.0
+
+[node name="Line2D3" type="Line2D" parent="Game"]
+position = Vector2(449, 242)
+points = PackedVector2Array(75, 100, 150, 0)
+width = 1.0
+
+[node name="Area2D" parent="Game" node_paths=PackedStringArray("next_node") instance=ExtResource("1_mtytl")]
+next_node = NodePath("../Area2D2")
+
+[node name="Area2D2" parent="Game" node_paths=PackedStringArray("next_node") instance=ExtResource("1_mtytl")]
+position = Vector2(599, 244)
+next_node = NodePath("../Area2D3")
+
+[node name="Timer" parent="Game/Area2D2" index="2"]
+autostart = false
+
+[node name="Area2D3" parent="Game" node_paths=PackedStringArray("next_node") instance=ExtResource("1_mtytl")]
+position = Vector2(525, 341)
+next_node = NodePath("../Area2D")
+
+[node name="Timer" parent="Game/Area2D3" index="2"]
+autostart = false
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+visible = false
+follow_viewport_enabled = true
+
+[node name="Menus" type="Control" parent="UILayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ItemList" type="ItemList" parent="UILayer/Menus"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HUD" type="Control" parent="UILayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BGLayer" type="CanvasLayer" parent="."]
+layer = -1
+visible = false
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="BGLayer"]
+visible = false
+
+[editable path="Game/Area2D"]
+[editable path="Game/Area2D2"]
+[editable path="Game/Area2D3"]
