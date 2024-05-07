@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://clpbysnx5cbst"]
+
+[ext_resource type="Script" path="res://Components/ClickableNode/clickable_node.gd" id="1_4rkl7"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fsmqd"]
+size = Vector2(20, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvfok"]
+
+[node name="ClickableNode" type="Area2D"]
+visible = false
+script = ExtResource("1_4rkl7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_fsmqd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_cvfok")
+
+[node name="StartDelay" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="TimeToClick" type="Timer" parent="."]
+wait_time = 5.0
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="timeout" from="StartDelay" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="TimeToClick" to="." method="_on_time_to_click_timeout"]
