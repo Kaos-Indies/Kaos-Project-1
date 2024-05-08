@@ -8,15 +8,26 @@ extends Area2D
 # Local Variables
 var is_mouse_in = false
 var clickable = false
+var node_index:int
 
 # Signals
-signal trigger_next(next_node:Area2D)
+signal clicked(index:int)
 signal final_node()
-signal click_timed_out(node:Area2D)
+signal click_timed_out(index:int)
 
 # Local Functions
 func activate():
+	print("Node ",self.node_index," activated")
 	start_timer.start()
+
+func deactivate():
+	print("Node ",self.node_index," deactivated")
+	clickable = false
+	visible = false
+
+func define(location:Vector2, index:int):
+	self.position = location
+	self.node_index = index
 
 func set_clickable():
 	clickable = true
@@ -26,13 +37,10 @@ func setPosition(location:Vector2):
 	self.position = location
 
 func on_click():
+	print("Node ",self.node_index," clicked")
 	self.time_to_click.stop()
-
-	if next_node == null:
-		final_node.emit()
-		return
-
-	trigger_next.emit(next_node)
+	self.clickable = false
+	clicked.emit(node_index)
 
 # Override Functions
 func _input(event):
@@ -61,4 +69,4 @@ func _on_timer_timeout():
 
 func _on_time_to_click_timeout():
 	self.time_to_click.stop()
-	click_timed_out.emit(self)
+	click_timed_out.emit(node_index)
